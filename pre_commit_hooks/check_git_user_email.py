@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Sequence
-from util import cmd_output
+from pre_commit_hooks.util import cmd_output
 
 
 def get_git_user_email_global() -> str:
