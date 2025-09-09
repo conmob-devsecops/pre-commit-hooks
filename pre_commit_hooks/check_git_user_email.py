@@ -39,10 +39,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             return 0
 
     raise RuntimeError(
-        """
+        f"""
     Git user email does not match allowed domains,
     please set it using 'git config user.email <email>'
     or globally by 'git config --global user.email <email>'
+
+    Domains allowed: {args.allowed_domains}
     """
     )
 
