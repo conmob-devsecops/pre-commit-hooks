@@ -1,0 +1,7 @@
+- id: check-git-user-email
+  name: check git user.email
+  description: Validate the git user email against allowed domain list.
+  entry: check-git-user-email
+  language: python
+  pass_filenames: false
+  always_run: true
