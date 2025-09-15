@@ -32,13 +32,13 @@ class CalledProcessError(RuntimeError):
 
 
 def added_files() -> set[str]:
-    cmd = ('git', 'diff', '--staged', '--name-only', '--diff-filter=A')
+    cmd = ("git", "diff", "--staged", "--name-only", "--diff-filter=A")
     return set(cmd_output(*cmd).splitlines())
 
 
 def cmd_output(*cmd: str, retcode: int | None = 0, **kwargs: Any) -> str:
-    kwargs.setdefault('stdout', subprocess.PIPE)
-    kwargs.setdefault('stderr', subprocess.PIPE)
+    kwargs.setdefault("stdout", subprocess.PIPE)
+    kwargs.setdefault("stderr", subprocess.PIPE)
     proc = subprocess.Popen(cmd, **kwargs)
     stdout, stderr = proc.communicate()
     stdout = stdout.decode()
@@ -48,8 +48,8 @@ def cmd_output(*cmd: str, retcode: int | None = 0, **kwargs: Any) -> str:
 
 
 def zsplit(s: str) -> list[str]:
-    s = s.strip('\0')
+    s = s.strip("\0")
     if s:
-        return s.split('\0')
+        return s.split("\0")
     else:
         return []
