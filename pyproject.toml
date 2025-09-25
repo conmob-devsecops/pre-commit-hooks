@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=80", "setuptools-scm>=9"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pre_commit_hooks"
+version = "1.0.0"
+description = "Some out-of-the-box hooks for pre-commit."
+readme = "README.md"
+license = { text = "BSD-3-Clause" }
+authors = [
+    { name = "Sebastian Gurkasch", email = "sebastian.gurkasch@t-systems.com" },
+    { name = "Robert Pagel", email = "robert.pagel@t-systems.com" },
+]
+requires-python = ">=3.13"
+dependencies = ["pre-commit==4.3.0", "pyyaml>=6.0.0"]
+
+[project.optional-dependencies]
+dev = [
+    "black>=25.9.0",
+    "ruff>=0.13.1",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/conmob-devsecops/pre-commit-hooks"
+Repository = "https://github.com/conmob-devsecops/pre-commit-hooks"
+Issues = "https://github.com/conmob-devsecops/pre-commit-hooks/issues"
+
+[tool.setuptools.packages.find]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+pythonpath = "pre_commit_hooks"
+addopts = ["--import-mode=importlib"]
+minversion = "6.0"
+testpaths = ["tests"]
+
+[project.scripts]
+check-git-user-email = "pre_commit_hooks.check_git_user_email:main"
+check-prohibited-filenames = "pre_commit_hooks.check_prohibited_filenames:main"

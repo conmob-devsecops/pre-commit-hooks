@@ -24,3 +24,34 @@
 #  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 #  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+import argparse
+import unittest
+
+import pre_commit_hooks.check_prohibited_filenames as lib
+
+
+class CommaSeparatedListActionTests(unittest.TestCase):
+    def test_values_none_sets_empty_list(self):
+        action = lib.CommaSeparatedList(option_strings=['--vals'], dest='vals')
+        ns = argparse.Namespace()
+        action(None, ns, None, option_string='--vals')
+        self.assertEqual(ns.vals, [])
+
+    def test_values_string_splits_trims_and_ignores_empty(self):
+        action = lib.CommaSeparatedList(option_strings=['--vals'], dest='vals')
+        ns = argparse.Namespace()
+        action(None, ns, ' a , b ,, c ', option_string='--vals')
+        self.assertEqual(ns.vals, ['a', 'b', 'c'])
+
+    def test_values_list_flattens_trims_and_ignores_empty(self):
+        action = lib.CommaSeparatedList(option_strings=['--vals'], dest='vals')
+        ns = argparse.Namespace()
+        action(None, ns, ['d,e', ' f ', ' , ', ',', 'g'], option_string='--vals')
+        self.assertEqual(ns.vals, ['d', 'e', 'f', 'g'])
+
+    def test_argparse_integration_with_nargs_star(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--vals', action=lib.CommaSeparatedList, nargs='*')
+        ns = parser.parse_args(['--vals', 'a,b', 'c', 'd,,', ' e , f '])
+        self.assertEqual(ns.vals, ['a', 'b', 'c', 'd', 'e', 'f'])

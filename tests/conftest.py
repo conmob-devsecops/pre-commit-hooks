@@ -24,3 +24,15 @@
 #  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 #  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+import sys
+from pathlib import Path
+
+# Add the project root (which contains 'pre_commit_hooks/') to sys.path
+ROOT = Path(__file__).resolve().parents[1]
+PKG_DIR = ROOT / 'pre_commit_hooks'
+
+if PKG_DIR.is_dir():
+    root_str = str(ROOT)
+    if root_str not in sys.path:
+        sys.path.insert(0, root_str)
