@@ -5,3 +5,10 @@
   language: python
   pass_filenames: false
   always_run: true
+- id: check-prohibited-filenames
+  name: check prohibited filenames
+  description: Checks file names against a list of prohibited names and patterns.
+  entry: check-prohibited-filenames
+  language: python
+  pass_filenames: true
+  always_run: false
